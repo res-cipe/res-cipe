@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Dropzone from 'react-dropzone-uploader';
-import 'react-dropzone-uploader/dist/styles.css';
 import {
   Button,
   ModalContent,
@@ -8,16 +7,13 @@ import {
   ModalOverlay,
   ModalHeader,
   ModalFooter,
-  ModalBody,
   ModalCloseButton,
   useDisclosure,
   FormControl,
   Input,
-  FormLabel,
-  Select,
-  Textarea,
 } from '@chakra-ui/react';
 
+// preview component for Dropzone
 const Preview = ({ meta }) => {
   const { name, percent, status } = meta;
   return (
@@ -33,21 +29,44 @@ const Preview = ({ meta }) => {
   );
 };
 
-export default function AddResume() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+export default function AddResume({ isOpen, onClose }) {
+  // state for resume cloudinary url
+  const [resumeURL, setResumeURL] = useState('');
+  // state for resume label
+  const [resumeLabel, setResumeLabel] = useState('');
 
-  const getUploadParams = ({ meta }) => {
-    return { url: 'https://httpbin.org/post' };
+  const handleClickAndCloseModal = () => {
+    // make network request to backend to send resume label and url
+
+    // close modal
+    onClose();
   };
 
-  const handleSubmit = (files, allFiles) => {
-    console.log(files.map((f) => f.meta));
+  // upload parameters
+  const getUploadParams = ({ file, meta }) => {
+    const body = new FormData();
+    body.append('file', file);
+    body.append('upload_preset', 'resume');
+    return {
+      url: 'https://api.cloudinary.com/v1_1/res-cipe/auto/upload',
+      body,
+    };
+  };
+
+  // handles submit for only the file upload, triggered if upload is successful
+  const handleUpload = (files, allFiles) => {
+    let { url } = JSON.parse(files[0].xhr.response);
+    // because of cloudinary security restrictions, we cannot serve pdf files directly
+    // instead change the extension of the file being requested and cloudinary will
+    // automatically transform the pdf file to an image on the fly
+    setResumeURL(url.replace(/\.pdf/, '.png'));
+
     allFiles.forEach((f) => f.remove());
   };
 
   return (
     <>
-      <Button onClick={onOpen}>Add Resume</Button>
+      {/* <Button onClick={onOpen}>Add Resume</Button> */}
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -55,11 +74,14 @@ export default function AddResume() {
           <ModalHeader>Add Resume</ModalHeader>
           <ModalCloseButton />
           <FormControl id="resume-nickname" isRequired>
-            <Input placeholder="Resume Nickname" />
+            <Input
+              onChange={(e) => setResumeLabel(e.target.value)}
+              placeholder="Resume Nickname"
+            />
           </FormControl>
           <Dropzone
             getUploadParams={getUploadParams}
-            onSubmit={handleSubmit}
+            onSubmit={handleUpload}
             PreviewComponent={Preview}
             inputContent="Drop Files"
             disabled={(files) =>
@@ -69,11 +91,12 @@ export default function AddResume() {
                 )
               )
             }
-            SubmitButtonComponent={() => (
-              <Button colorScheme="blue">Submit</Button>
-            )}
           />
-          <ModalFooter></ModalFooter>
+          <ModalFooter>
+            <Button onClick={handleClickAndCloseModal} colorScheme="blue">
+              Submit
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
