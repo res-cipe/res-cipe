@@ -30,8 +30,6 @@ const Preview = ({ meta }) => {
 };
 
 export default function AddResume({ isOpen, onClose }) {
-  // hook to control opening/closing modal
-  // const { isOpen, onOpen, onClose } = useDisclosure();
   // state for resume cloudinary url
   const [resumeURL, setResumeURL] = useState('');
   // state for resume label
