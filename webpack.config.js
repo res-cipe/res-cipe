@@ -11,7 +11,13 @@ module.exports = {
   devServer: {
     hot: true,
     port: 8080,
+<<<<<<< HEAD
     proxy: { '/': 'http://localhost:3000' },
+=======
+    proxy: {
+      '/': 'http://localhost:3000/',
+    },
+>>>>>>> a217e196332eabf42974eabbbcffebdaad2a3ffa
     publicPath: '/build',
   },
   module: {
