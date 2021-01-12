@@ -31,6 +31,7 @@
     "cookie-session": "^1.4.0",
     "cross-env": "^7.0.3",
     "express": "^4.12.3",
+    "formik": "^2.2.6",
     "express-validator": "^5.3.1",
     "framer-motion": "^3.2.1",
     "passport": "^0.4.1",
