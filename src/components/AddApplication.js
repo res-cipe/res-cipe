@@ -27,18 +27,18 @@ export default function AddApplication() {
         <ModalContent>
           <ModalHeader>Add Application</ModalHeader>
           <ModalCloseButton />
-          <FormControl id='company-name' isRequired>
-            <Input placeholder='Company Name' />
-            <Input placeholder='Job Post Link' />
-            <Select placeholder='Choose a resumé...'>
-              <option value='option 1'>Option 1</option>
-              <option value='option 2'>Option 2</option>
+          <FormControl id="company-name" isRequired>
+            <Input placeholder="Company Name" />
+            <Input placeholder="Job Post Link" />
+            <Select placeholder="Choose a resumé...">
+              <option value="option 1">Option 1</option>
+              <option value="option 2">Option 2</option>
             </Select>
-            <Textarea placeholder='Tech Stack'></Textarea>
+            <Textarea placeholder="Tech Stack" />
           </FormControl>
 
           <ModalFooter>
-            <Button colorScheme='blue'>Submit</Button>
+            <Button colorScheme="blue">Submit</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
