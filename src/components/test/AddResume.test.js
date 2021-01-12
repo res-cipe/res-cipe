@@ -6,9 +6,18 @@ import AddResume from '../AddResume';
 describe('AddResume modal component', () => {
   const props = {};
 
-  beforeEach(() => {});
+  beforeEach(() => {
+    props.isOpen = true;
+    props.onClose = jest.fn().mockName('onClose');
+  });
 
   it('should render to the page without crashing', () => {
     render(<AddResume {...props} />);
+  });
+
+  it('should be able to close the modal', () => {
+    render(<AddResume {...props} />);
+    fireEvent.click(screen.getByText('Submit'));
+    expect(props.onClose).toHaveBeenCalledTimes(1);
   });
 });
