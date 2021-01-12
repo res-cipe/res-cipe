@@ -14,16 +14,19 @@ app.use(express.urlencoded({ extended: false }));
 // Express Validator Middleware
 app.use(expressValidator());
 
-// Serving index.html
-app.use(express.static(path.join(__dirname, '../index.html')));
-
 // router for user login
 // app.use('/login', userRouter);
 
 // router for user signup
 app.use('/signup', userRouter);
 
-app.use('/dashboard', dashRouter)
+app.use('/dashboard', dashRouter);
+
+// Serving index.html
+// app.use(express.static(path.join(__dirname, '../index.html')));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../index.html'));
+});
 
 // Default Error Handler
 app.use((err, req, res, next) => {
