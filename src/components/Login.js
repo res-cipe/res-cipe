@@ -11,7 +11,8 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/react';
 
-export default function Signup() {
+export default function Login(props) {
+  const { setIsLoggedIn } = props;
   const [showPass, setShow] = React.useState(false);
   const clickPass = () => setShow(!showPass);
 
