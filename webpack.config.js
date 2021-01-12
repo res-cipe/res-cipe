@@ -32,6 +32,10 @@ module.exports = {
           extensions: ['.js', '.jsx', '.json'],
         },
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
 };
