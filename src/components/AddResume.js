@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Dropzone from 'react-dropzone-uploader';
-import 'react-dropzone-uploader/dist/styles.css';
 import {
   Button,
   ModalContent,
