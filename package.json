@@ -30,6 +30,7 @@
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "express": "^4.12.3",
+    "formik": "^2.2.6",
     "framer-motion": "^3.2.1",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
