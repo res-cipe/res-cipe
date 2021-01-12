@@ -11,8 +11,7 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/react';
 
-export default function Login(props) {
-  const { setIsLoggedIn } = props;
+export default function Login({ setIsLoggedIn }) {
   const [showPass, setShow] = React.useState(false);
   const clickPass = () => setShow(!showPass);
 
@@ -37,26 +36,26 @@ export default function Login(props) {
         onSubmit={(values, actions) => {
           const { username, password } = values;
           setTimeout(() => {
-            alert(
-              JSON.stringify(
-                {
-                  username,
-                  password,
-                },
-                null,
-                2
-              )
-            );
+            // alert(
+            //   JSON.stringify(
+            //     {
+            //       username,
+            //       password,
+            //     },
+            //     null,
+            //     2
+            //   )
+            // );
             actions.setSubmitting(false);
             // double check the endpoint, make sure the fetch request is built proper
-            fetch('./login', {
+            fetch('/login', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 username,
                 password,
               }),
-            });
+            }).then((res) => res.json());
           }, 1000);
         }}
       >
