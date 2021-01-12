@@ -1,13 +1,17 @@
 import React from 'react';
+import { Button, useDisclosure } from '@chakra-ui/react';
 import AddApplication from './components/AddApplication';
 import AddResume from './components/AddResume';
-import 'react-dropzone-uploader/dist/styles.css';
 
 const App = () => {
+  // hook to control opening/closing modal
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <div>
       <AddApplication />
-      <AddResume />
+      <Button onClick={onOpen}>Add Resume</Button>
+      <AddResume isOpen={isOpen} onClose={onClose} />
     </div>
   );
 };
