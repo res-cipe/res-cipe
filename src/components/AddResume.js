@@ -29,9 +29,9 @@ const Preview = ({ meta }) => {
   );
 };
 
-export default function AddResume() {
+export default function AddResume({ isOpen, onClose }) {
   // hook to control opening/closing modal
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
   // state for resume cloudinary url
   const [resumeURL, setResumeURL] = useState('');
   // state for resume label
@@ -40,7 +40,7 @@ export default function AddResume() {
   const handleClickAndCloseModal = () => {
     // make network request to backend to send resume label and url
 
-    // close modal1
+    // close modal
     onClose();
   };
 
@@ -68,7 +68,7 @@ export default function AddResume() {
 
   return (
     <>
-      <Button onClick={onOpen}>Add Resume</Button>
+      {/* <Button onClick={onOpen}>Add Resume</Button> */}
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
