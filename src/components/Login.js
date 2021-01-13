@@ -9,9 +9,12 @@ import {
   InputRightElement,
   Button,
   FormErrorMessage,
+  useDisclosure,
 } from '@chakra-ui/react';
+import Signup from './Signup';
 
 export default function Login({ setIsLoggedIn }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPass, setShow] = React.useState(false);
   const clickPass = () => setShow(!showPass);
 
@@ -112,6 +115,8 @@ export default function Login({ setIsLoggedIn }) {
           </Form>
         )}
       </Formik>
+      <Button onClick={onOpen}>Signup</Button>
+      <Signup isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 }
