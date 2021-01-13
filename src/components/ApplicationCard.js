@@ -12,8 +12,11 @@ import {
 import { StarIcon } from '@chakra-ui/icons';
 
 export default function ApplicationCard(props) {
-  function updateApplication(update, id) {
-    fetch(`/dashboard/${props.userId}/application/${id}`, {
+  function updateApplication(update) {
+    let updateString = '';
+    if (update.rating) updateString = `/dashboard/${props.userId}/rating`;
+    else if (update.status) updateString = `/dashboard/${props.userId}/status`;
+    fetch(updateString, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +61,7 @@ export default function ApplicationCard(props) {
             size='sm'
             onChange={(e) => {
               console.log(e.target.value);
-              // updateApplication({ status: e.target.value }, props.id);
+              // updateApplication({ status: e.target.value, id: props.id });
             }}
           >
             <option>Wishlist</option>
@@ -84,7 +87,7 @@ export default function ApplicationCard(props) {
                 icon={<StarIcon />}
                 onClick={() => {
                   // props.updateRating(i + 1)
-                  updateApplication({ rating: props.rating }, props.id);
+                  updateApplication({ rating: props.rating, id: props.id });
                 }}
               />
             ))}
