@@ -1,11 +1,9 @@
 const db = require('../models/userModel');
-const expressValidator = require('express-validator');
 
 const userController = {};
 
 userController.newUser = async (req, res, next) => {
   const { username, password, email, firstName, lastName } = req.body;
-  console.log(username, password, email, firstName, lastName);
   req.checkBody('username', 'Username field cannot be empty.').notEmpty();
   req
     .checkBody('username', 'Username must be between 4-15 characters long.')
@@ -51,7 +49,6 @@ userController.newUser = async (req, res, next) => {
   const errors = req.validationErrors();
 
   if (errors) {
-    console.log(`errors: ${JSON.stringify(errors)}`);
     console.log('errors from validation:', errors);
     res.locals.validationErr = errors;
   } else {
