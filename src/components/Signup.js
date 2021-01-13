@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import {
-  Box,
   FormControl,
   FormLabel,
   Input,
@@ -13,7 +12,6 @@ import {
   Modal,
   ModalOverlay,
   ModalHeader,
-  ModalFooter,
   ModalCloseButton,
 } from '@chakra-ui/react';
 
@@ -36,7 +34,7 @@ export default function Signup({ isOpen, onClose }) {
             firstName: '',
             lastName: '',
             password: '',
-            confirmPass: '',
+            passwordMatch: '',
           }}
           validate={(values) => {
             const errors = {};
@@ -46,7 +44,7 @@ export default function Signup({ isOpen, onClose }) {
               firstName,
               lastName,
               password,
-              confirmPass,
+              passwordMatch,
             } = values;
 
             if (!email) {
@@ -87,43 +85,44 @@ export default function Signup({ isOpen, onClose }) {
               //     'Must include one lowercase character, one uppercase character, a number, and a special character';
             }
 
-            if (!confirmPass) errors.confirmPass = 'Required';
+            if (!passwordMatch) errors.passwordMatch = 'Required';
 
-            if (confirmPass !== password)
-              errors.confirmPass = 'Passwords do not match';
+            if (passwordMatch !== password)
+              errors.passwordMatch = 'Passwords do not match';
 
             return errors;
           }}
           onSubmit={(values, actions) => {
-            const { email, username, firstName, lastName, password } = values;
-            setTimeout(() => {
-              alert(
-                JSON.stringify(
-                  {
-                    email,
-                    username,
-                    firstName,
-                    lastName,
-                    password,
-                  },
-                  null,
-                  2
-                )
-              );
-              actions.setSubmitting(false);
-              // double check the endpoint, make sure the fetch request is built proper
-              fetch('/signup', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  username,
-                  password,
-                  email,
-                  firstName,
-                  lastName,
-                }),
+            const {
+              email,
+              username,
+              firstName,
+              lastName,
+              password,
+              passwordMatch,
+            } = values;
+            // double check the endpoint, make sure the fetch request is built proper
+            fetch('/signup', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                username,
+                password,
+                email,
+                firstName,
+                lastName,
+                passwordMatch,
+              }),
+            })
+              .then((response) => {
+                if (response.ok) {
+                  actions.setSubmitting(false);
+                  onClose();
+                }
+              })
+              .catch((error) => {
+                console.log(error);
               });
-            }, 1000);
           }}
         >
           {(props) => (
@@ -211,20 +210,20 @@ export default function Signup({ isOpen, onClose }) {
                   </FormControl>
                 )}
               </Field>
-              <Field name="confirmPass">
+              <Field name="passwordMatch">
                 {({ field, form }) => (
                   <FormControl
                     isInvalid={
-                      form.errors.confirmPass && form.touched.confirmPass
+                      form.errors.passwordMatch && form.touched.passwordMatch
                     }
                   >
-                    <FormLabel htmlFor="confirmPass">
+                    <FormLabel htmlFor="passwordMatch">
                       Confirm Password
                     </FormLabel>
                     <InputGroup>
                       <Input
                         {...field}
-                        id="confirmPass"
+                        id="passwordMatch"
                         required="true"
                         type={showConf ? 'text' : 'password'}
                         placeholder="Make sure she matches!"
@@ -236,7 +235,7 @@ export default function Signup({ isOpen, onClose }) {
                       </InputRightElement>
                     </InputGroup>
                     <FormErrorMessage>
-                      {form.errors.confirmPass}
+                      {form.errors.passwordMatch}
                     </FormErrorMessage>
                   </FormControl>
                 )}
