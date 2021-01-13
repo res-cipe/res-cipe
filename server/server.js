@@ -1,11 +1,21 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+
+const passport = require('passport');
+
+// express validator for validation of information sent to backend
 const expressValidator = require('express-validator');
 const cookieParser = require('cookie-parser');
-const PORT = 3000;
+
+// authentication packages
+const session = require('express-session');
+
+// routers
 const dashRouter = require('./routes/dashRouter');
 const userRouter = require('./routes/userRouter');
+
+const PORT = 3000;
 
 // Body Parser Middleware
 app.use(express.json());
@@ -13,6 +23,23 @@ app.use(express.urlencoded({ extended: false }));
 
 // Express Validator Middleware
 app.use(expressValidator());
+
+// cookieParser middleware
+app.use(cookieParser());
+
+// session middleware
+app.use(
+  session({
+    secret: 'ZiDwy4h7kZqzuXx',
+    resave: false,
+    saveUninitialized: false,
+    // cookie: { secure: true },
+  })
+);
+
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // router for user login
 // app.use('/login', userRouter);
