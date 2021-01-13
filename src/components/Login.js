@@ -9,16 +9,19 @@ import {
   InputRightElement,
   Button,
   FormErrorMessage,
+  useDisclosure,
 } from '@chakra-ui/react';
+import Signup from './Signup';
 
-export default function Signup() {
+export default function Login({ setIsLoggedIn }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPass, setShow] = React.useState(false);
   const clickPass = () => setShow(!showPass);
 
   return (
     <Box>
       <Formik
-        initialValues={{}}
+        initialValues={{ username: '', password: '' }}
         validate={(values) => {
           const errors = {};
           const { username, password } = values;
@@ -35,28 +38,28 @@ export default function Signup() {
         }}
         onSubmit={(values, actions) => {
           const { username, password } = values;
-          setTimeout(() => {
-            alert(
-              JSON.stringify(
-                {
-                  username,
-                  password,
-                },
-                null,
-                2
-              )
-            );
-            actions.setSubmitting(false);
-            // double check the endpoint, make sure the fetch request is built proper
-            fetch('./login', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
+          // setTimeout(() => {
+          alert(
+            JSON.stringify(
+              {
                 username,
                 password,
-              }),
-            });
-          }, 1000);
+              },
+              null,
+              2
+            )
+          );
+          actions.setSubmitting(false);
+          // double check the endpoint, make sure the fetch request is built proper
+          // fetch('/login', {
+          //   method: 'POST',
+          //   headers: { 'Content-Type': 'application/json' },
+          //   body: JSON.stringify({
+          //     username,
+          //     password,
+          //   }),
+          // }).then((res) => res.json());
+          // }, 1000);
         }}
       >
         {(props) => (
@@ -112,6 +115,8 @@ export default function Signup() {
           </Form>
         )}
       </Formik>
+      <Button onClick={onOpen}>Signup</Button>
+      <Signup isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 }
