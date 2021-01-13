@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import Dropzone from 'react-dropzone-uploader';
 import {
-  Button,
   ModalContent,
   Modal,
   ModalOverlay,
   ModalHeader,
-  ModalFooter,
   ModalCloseButton,
-  useDisclosure,
   FormControl,
   Input,
 } from '@chakra-ui/react';
@@ -29,18 +26,9 @@ const Preview = ({ meta }) => {
   );
 };
 
-export default function AddResume({ isOpen, onClose }) {
-  // state for resume cloudinary url
-  const [resumeURL, setResumeURL] = useState('');
+export default function AddResume({ isOpen, onClose, userId }) {
   // state for resume label
   const [resumeLabel, setResumeLabel] = useState('');
-
-  const handleClickAndCloseModal = () => {
-    // make network request to backend to send resume label and url
-
-    // close modal
-    onClose();
-  };
 
   // upload parameters
   const getUploadParams = ({ file, meta }) => {
@@ -54,51 +42,57 @@ export default function AddResume({ isOpen, onClose }) {
   };
 
   // handles submit for only the file upload, triggered if upload is successful
-  const handleUpload = (files, allFiles) => {
+  const handleSubmit = (files, allFiles) => {
     let { url } = JSON.parse(files[0].xhr.response);
     // because of cloudinary security restrictions, we cannot serve pdf files directly
-    // instead change the extension of the file being requested and cloudinary will
+    // instead, change the extension of the file being requested and cloudinary will
     // automatically transform the pdf file to an image on the fly
-    setResumeURL(url.replace(/\.pdf/, '.png'));
+    url = url.replace(/\.pdf/, '.png');
 
-    allFiles.forEach((f) => f.remove());
+    fetch(`/dashboard/${userId}/resume`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ resName: resumeLabel, link: url }),
+    })
+      .then((response) => {
+        // clean up
+        // remove all the finals from the dropzone after upload
+        allFiles.forEach((f) => f.remove());
+        // closes modal
+        onClose();
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
-    <>
-      {/* <Button onClick={onOpen}>Add Resume</Button> */}
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Add Resume</ModalHeader>
-          <ModalCloseButton />
-          <FormControl id="resume-nickname" isRequired>
-            <Input
-              onChange={(e) => setResumeLabel(e.target.value)}
-              placeholder="Resume Nickname"
-            />
-          </FormControl>
-          <Dropzone
-            getUploadParams={getUploadParams}
-            onSubmit={handleUpload}
-            PreviewComponent={Preview}
-            inputContent="Drop Files"
-            disabled={(files) =>
-              files.some((f) =>
-                ['preparing', 'getting_upload_params', 'uploading'].includes(
-                  f.meta.status
-                )
-              )
-            }
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Add Resume</ModalHeader>
+        <ModalCloseButton />
+        <FormControl id="resume-nickname" isRequired>
+          <Input
+            onChange={(e) => setResumeLabel(e.target.value)}
+            placeholder="Resume Nickname"
           />
-          <ModalFooter>
-            <Button onClick={handleClickAndCloseModal} colorScheme="blue">
-              Submit
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
+        </FormControl>
+
+        <Dropzone
+          getUploadParams={getUploadParams}
+          onSubmit={handleSubmit}
+          PreviewComponent={Preview}
+          inputContent="Drop Files"
+          disabled={(files) =>
+            files.some((f) =>
+              ['preparing', 'getting_upload_params', 'uploading'].includes(
+                f.meta.status
+              )
+            )
+          }
+        />
+      </ModalContent>
+    </Modal>
   );
 }
