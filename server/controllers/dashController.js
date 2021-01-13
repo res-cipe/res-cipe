@@ -102,4 +102,20 @@ dashController.deleteApplication = async (req, res, next) => {
   }
 };
 
+dashController.updateStatus = async (req, res, next) => {
+  const { status, id } = req.body;
+  const updateQuery = `UPDATE application_table SET status = $1 WHERE id = $2`
+  const queryParams = [status, id];
+
+  try {
+    await db.query(updateQuery, queryParams);
+    return next();
+  } catch (err) {
+    next({
+      log: `dashController.deleteApplication: ERROR: ${err}`,
+      message: { err: 'Error occurred in deleteApplication controller' },
+    });
+  }
+}
+
 module.exports = dashController;
