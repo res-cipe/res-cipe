@@ -4,49 +4,88 @@ import AddApplication from './AddApplication';
 import AddResume from './AddResume';
 import ApplicationCard from './ApplicationCard';
 
-export default function Dashboard() {
-  const props = {
-    imageUrl: 'https://bit.ly/2Z4KKcF',
-    imageAlt: 'Rear view of modern home with pool',
+export default function Dashboard({ userId }) {
+  const props = [
+    {
+      imageUrl: 'https://bit.ly/2Z4KKcF',
+      imageAlt: 'Rear view of modern home with pool',
+      company: 'Fucking Google',
+      link:
+        'https://www.linkedin.com/jobs/view/2208417001/?alternateChannel=search&refId=QayKwfbK20TiNXWx9cc8EA%3D%3D&trackingId=Ox84l426JPW8q3kqUloalg%3D%3D',
+      reviewCount: 34,
+      rating: 3,
+      resumeLabel: 'Purple Header',
+      status: 'Interested',
+      id: 1001,
+    },
+    {
+      company: 'Facebook',
+      link: 'facebook.com',
+      rating: 5,
+      resumeLabel: 'More Pedestrian',
+      status: 'Offer',
+      id: 1002,
+    },
+    {
+      company: 'LinkedIn',
+      link: 'linkedin.com',
+      rating: 1,
+      resumeLabel: 'More Pedestrian',
+      status: 'Take Home',
+      id: 1003,
+    },
+  ];
 
-    company: 'Fucking Google',
-    link:
-      'https://www.linkedin.com/jobs/view/2208417001/?alternateChannel=search&refId=QayKwfbK20TiNXWx9cc8EA%3D%3D&trackingId=Ox84l426JPW8q3kqUloalg%3D%3D',
-    reviewCount: 34,
-    rating: 3,
-    resumeLabel: 'Purple Header',
-  };
+  const [rating, setRating] = React.useState(props.rating);
 
-  const [rating, setRating] = React.useState(1);
+  const [applications, setApplications] = React.useState([]);
 
-  // const applicationCards = [];
+  React.useEffect(() => {
+    fetchAllApplications();
+  }, []);
 
-  // const React.useEffect(() => {
-  //   // fetch all the applications for the user from the backend
+  function fetchAllApplications() {
+    fetch(`/dashboard/${userId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setApplications(data);
+      })
+      .catch((error) => console.log(error));
+  }
 
-  //   // once we have all the applications,
-  //   // create an array of ApplicationCards
-  //     applicationCards.push(<ApplicationCard
-  //       key=
-  //       company={props.company}
-  //       link={props.link}
-  //       rating={rating}
-  //       resumeLabel={props.resumeLabel}
-  //       updateRating={setRating}
-  //     />)
-  // })
+  const applicationCards = [];
+
+  if (applications) {
+    applications.forEach((app, index) => {
+      const {
+        company_name,
+        job_post_link,
+        resume_id,
+        status,
+        rating,
+        id,
+      } = app;
+      applicationCards.push(
+        <ApplicationCard
+          key={id}
+          id={id}
+          userId={userId}
+          company={company_name}
+          link={job_post_link}
+          rating={rating}
+          resumeLabel={resume_id}
+          status={status}
+          fetchAllApplications={fetchAllApplications}
+        />
+      );
+    });
+  }
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <div>
-      <ApplicationCard
-        company={props.company}
-        link={props.link}
-        rating={rating}
-        resumeLabel={props.resumeLabel}
-        updateRating={setRating}
-      />
+      {applicationCards}
 
       <AddApplication />
       <Button onClick={onOpen}>Add Resume</Button>

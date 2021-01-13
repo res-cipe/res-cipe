@@ -4,10 +4,15 @@ import Login from './components/Login';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [userId, setUserId] = useState(1);
 
   return (
     <div>
-      {isLoggedIn ? <Dashboard /> : <Login setIsLoggedIn={setIsLoggedIn} />}
+      {isLoggedIn ? (
+        <Dashboard userId={userId} />
+      ) : (
+        <Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} />
+      )}
     </div>
   );
 }

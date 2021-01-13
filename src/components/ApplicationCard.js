@@ -1,8 +1,31 @@
 import React from 'react';
-import { Box, Image, Badge, Link, IconButton } from '@chakra-ui/react';
+import {
+  Box,
+  Image,
+  Badge,
+  Link,
+  IconButton,
+  FormControl,
+  FormLabel,
+  Select,
+} from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
 
 export default function ApplicationCard(props) {
+  function updateApplication(update, id) {
+    fetch(`/dashboard/${props.userId}/application/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(update),
+    })
+      .then((response) => {
+        props.fetchAllApplications();
+      })
+      .catch((error) => console.log(error));
+  }
+
   return (
     <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
       {/* <Image src={props.imageUrl} alt={props.imageAlt} /> */}
@@ -29,6 +52,26 @@ export default function ApplicationCard(props) {
           </Link>
         </Box>
 
+        <FormControl id='status'>
+          <Select
+            placeholder={props.status}
+            size='sm'
+            onChange={(e) => {
+              console.log(e.target.value);
+              // updateApplication({ status: e.target.value }, props.id);
+            }}
+          >
+            <option>Wishlist</option>
+            <option>Applied</option>
+            <option>Interview Scheduled</option>
+            <option>Interview</option>
+            <option>Take Home</option>
+            <option>Offer</option>
+            <option>Offer Declined</option>
+            <option>Rejected</option>
+          </Select>
+        </FormControl>
+
         <Box d='flex' mt='2' alignItems='center'>
           {Array(5)
             .fill('')
@@ -40,7 +83,8 @@ export default function ApplicationCard(props) {
                 size='sm'
                 icon={<StarIcon />}
                 onClick={() => {
-                  props.updateRating(i + 1);
+                  // props.updateRating(i + 1)
+                  updateApplication({ rating: props.rating }, props.id);
                 }}
               />
             ))}

@@ -25,9 +25,9 @@ export default function AddApplication() {
         <ModalContent>
           <ModalHeader>Add Application</ModalHeader>
           <ModalCloseButton />
-          <FormControl id='company-name' isRequired>
-            <Input placeholder='Company Name' />
-            <Input placeholder='Job Post Link' />
+          <FormControl isRequired>
+            <Input placeholder='Company Name' id='company-name' />
+            <Input placeholder='Job Post Link' id='job-link' />
             <Select placeholder='Choose a resumé...'>
               <option value='option 1'>Option 1</option>
               <option value='option 2'>Option 2</option>
