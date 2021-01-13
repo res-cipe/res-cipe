@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDisclosure } from '@chakra-ui/react';
+import { Button, useDisclosure } from '@chakra-ui/react';
 import AddApplication from './AddApplication';
 import AddResume from './AddResume';
 
