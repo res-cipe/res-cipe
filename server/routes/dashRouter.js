@@ -17,4 +17,8 @@ router.post('/:id/application', dashController.postApplication, (req, res) => {
   res.status(200).send();
 });
 
+router.delete('/:id/delete', dashController.deleteApplication, (req, res) => {
+  res.status(200).send();
+});
+
 module.exports = router;
