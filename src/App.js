@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 
-const App = () => {
+export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
@@ -10,6 +10,4 @@ const App = () => {
       {isLoggedIn ? <Dashboard /> : <Login setIsLoggedIn={setIsLoggedIn} />}
     </div>
   );
-};
-
-export default App;
+}
