@@ -31,9 +31,13 @@
     "cookie-session": "^1.4.0",
     "cross-env": "^7.0.3",
     "express": "^4.12.3",
+<<<<<<< HEAD
     "express-session": "^1.17.1",
     "formik": "^2.2.6",
+=======
+>>>>>>> main
     "express-validator": "^5.3.1",
+    "formik": "^2.2.6",
     "framer-motion": "^3.2.1",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",

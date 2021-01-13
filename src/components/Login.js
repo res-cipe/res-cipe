@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import {
   Box,
@@ -9,10 +9,13 @@ import {
   InputRightElement,
   Button,
   FormErrorMessage,
+  useDisclosure,
 } from '@chakra-ui/react';
+import Signup from './Signup';
 
 export default function Login({ setIsLoggedIn }) {
-  const [showPass, setShow] = React.useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [showPass, setShow] = useState(false);
   const clickPass = () => setShow(!showPass);
 
   return (
@@ -61,23 +64,23 @@ export default function Login({ setIsLoggedIn }) {
       >
         {(props) => (
           <Form>
-            <Field name='username'>
+            <Field name="username">
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.username && form.touched.username}
                 >
                   <Input
                     {...field}
-                    id='username'
-                    placeholder='Username'
-                    required='true'
+                    id="username"
+                    placeholder="Username"
+                    required="true"
                   />
                   <FormErrorMessage>{form.errors.username}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
 
-            <Field name='password'>
+            <Field name="password">
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.password && form.touched.password}
@@ -85,13 +88,13 @@ export default function Login({ setIsLoggedIn }) {
                   <InputGroup>
                     <Input
                       {...field}
-                      id='password'
-                      required='true'
+                      id="password"
+                      required="true"
                       type={showPass ? 'text' : 'password'}
-                      placeholder='Password'
+                      placeholder="Password"
                     />
-                    <InputRightElement width='4.5rem'>
-                      <Button h='1.75rem' size='sm' onClick={clickPass}>
+                    <InputRightElement width="4.5rem">
+                      <Button h="1.75rem" size="sm" onClick={clickPass}>
                         {showPass ? 'Hide' : 'Show'}
                       </Button>
                     </InputRightElement>
@@ -103,15 +106,17 @@ export default function Login({ setIsLoggedIn }) {
 
             <Button
               mt={4}
-              colorScheme='teal'
+              colorScheme="teal"
               isLoading={props.isSubmitting}
-              type='submit'
+              type="submit"
             >
               Login
             </Button>
           </Form>
         )}
       </Formik>
+      <Button onClick={onOpen}>Signup</Button>
+      <Signup isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 }

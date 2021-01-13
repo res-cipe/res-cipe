@@ -54,9 +54,11 @@ userController.newUser = (req, res, next) => {
   const errors = req.validationErrors();
 
   if (errors) {
-    console.log(`errors: ${JSON.stringify(errors)}`);
-    console.log('errors from validation:', errors);
-    res.locals.validationErr = errors;
+    return next({
+      log: `ERROR: useController.js: Form validation errors: ${errors}`,
+      status: 400,
+      message: { err: 'Form validation error' },
+    });
   } else {
     bcrypt.hash(password, saltRounds, async (err, hash) => {
       // Store hash in your password DB.
