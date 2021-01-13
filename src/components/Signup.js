@@ -61,18 +61,18 @@ export default function Signup() {
 
           if (!lastName) errors.lastName = 'Required';
 
-          if (!password) {
-            errors.password = 'Required';
-          } else if (password.length < 8 || password.length > 100) {
-            errors.password = 'Password must be between 8-100 characters long';
-          } else if (
-            !password.match(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$/
-            )
-          ) {
-            errors.password =
-              'Must include one lowercase character, one uppercase character, a number, and a special character';
-          }
+          // if (!password) {
+          //   errors.password = 'Required';
+          // } else if (password.length < 8 || password.length > 100) {
+          //   errors.password = 'Password must be between 8-100 characters long';
+          // } else if (
+          //   !password.match(
+          //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$/
+          //   )
+          // ) {
+          //   errors.password =
+          //     'Must include one lowercase character, one uppercase character, a number, and a special character';
+          // }
 
           if (!confirmPass) errors.confirmPass = 'Required';
 
@@ -89,8 +89,8 @@ export default function Signup() {
                 {
                   email,
                   username,
-                  first_name: firstName,
-                  last_name: lastName,
+                  firstName,
+                  lastName,
                   password,
                 },
                 null,
@@ -106,8 +106,8 @@ export default function Signup() {
                 username,
                 password,
                 email,
-                first_name: firstName,
-                last_name: lastName,
+                firstName,
+                lastName,
               }),
             });
           }, 1000);
@@ -115,81 +115,81 @@ export default function Signup() {
       >
         {(props) => (
           <Form>
-            <Field name='username'>
+            <Field name="username">
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.username && form.touched.username}
                 >
-                  <FormLabel htmlFor='username'>Username</FormLabel>
+                  <FormLabel htmlFor="username">Username</FormLabel>
                   <Input
                     {...field}
-                    id='username'
-                    placeholder='4 to 15 characters'
-                    required='true'
+                    id="username"
+                    placeholder="4 to 15 characters"
+                    required="true"
                   />
                   <FormErrorMessage>{form.errors.username}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
-            <Field name='email'>
+            <Field name="email">
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.email && form.touched.email}
                 >
-                  <FormLabel htmlFor='email'>Email Address</FormLabel>
+                  <FormLabel htmlFor="email">Email Address</FormLabel>
                   <Input
                     {...field}
-                    id='email'
-                    placeholder='email'
-                    required='true'
+                    id="email"
+                    placeholder="email"
+                    required="true"
                   />
                   <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
-            <Field name='firstName'>
+            <Field name="firstName">
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.firstName && form.touched.firstName}
                 >
-                  <FormLabel htmlFor='firstName'>First Name</FormLabel>
+                  <FormLabel htmlFor="firstName">First Name</FormLabel>
                   <Input
                     {...field}
-                    id='firstName'
-                    placeholder='required'
-                    required='true'
+                    id="firstName"
+                    placeholder="required"
+                    required="true"
                   />
                   <FormErrorMessage>{form.errors.firstName}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
-            <Field name='lastName'>
+            <Field name="lastName">
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.lastName && form.touched.lastName}
                 >
-                  <FormLabel htmlFor='lastName'>Last Name</FormLabel>
-                  <Input {...field} id='lastName' placeholder='required' />
+                  <FormLabel htmlFor="lastName">Last Name</FormLabel>
+                  <Input {...field} id="lastName" placeholder="required" />
                   <FormErrorMessage>{form.errors.lastName}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
-            <Field name='password'>
+            <Field name="password">
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.password && form.touched.password}
                 >
-                  <FormLabel htmlFor='password'>Password</FormLabel>
+                  <FormLabel htmlFor="password">Password</FormLabel>
                   <InputGroup>
                     <Input
                       {...field}
-                      id='password'
-                      required='true'
+                      id="password"
+                      required="true"
                       type={showPass ? 'text' : 'password'}
-                      placeholder='must include one lowercase character, one uppercase character, a number, and a special character'
+                      placeholder="must include one lowercase character, one uppercase character, a number, and a special character"
                     />
-                    <InputRightElement width='4.5rem'>
-                      <Button h='1.75rem' size='sm' onClick={clickPass}>
+                    <InputRightElement width="4.5rem">
+                      <Button h="1.75rem" size="sm" onClick={clickPass}>
                         {showPass ? 'Hide' : 'Show'}
                       </Button>
                     </InputRightElement>
@@ -198,24 +198,24 @@ export default function Signup() {
                 </FormControl>
               )}
             </Field>
-            <Field name='confirmPass'>
+            <Field name="confirmPass">
               {({ field, form }) => (
                 <FormControl
                   isInvalid={
                     form.errors.confirmPass && form.touched.confirmPass
                   }
                 >
-                  <FormLabel htmlFor='confirmPass'>Confirm Password</FormLabel>
+                  <FormLabel htmlFor="confirmPass">Confirm Password</FormLabel>
                   <InputGroup>
                     <Input
                       {...field}
-                      id='confirmPass'
-                      required='true'
+                      id="confirmPass"
+                      required="true"
                       type={showConf ? 'text' : 'password'}
-                      placeholder='Make sure she matches!'
+                      placeholder="Make sure she matches!"
                     />
-                    <InputRightElement width='4.5rem'>
-                      <Button h='1.75rem' size='sm' onClick={clickConf}>
+                    <InputRightElement width="4.5rem">
+                      <Button h="1.75rem" size="sm" onClick={clickConf}>
                         {showConf ? 'Hide' : 'Show'}
                       </Button>
                     </InputRightElement>
@@ -226,9 +226,9 @@ export default function Signup() {
             </Field>
             <Button
               mt={4}
-              colorScheme='teal'
+              colorScheme="teal"
               isLoading={props.isSubmitting}
-              type='submit'
+              type="submit"
             >
               Submit
             </Button>
