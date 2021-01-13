@@ -18,7 +18,7 @@ export default function Login({ setIsLoggedIn }) {
   return (
     <Box>
       <Formik
-        initialValues={{}}
+        initialValues={{ username: '', password: '' }}
         validate={(values) => {
           const errors = {};
           const { username, password } = values;
@@ -35,28 +35,28 @@ export default function Login({ setIsLoggedIn }) {
         }}
         onSubmit={(values, actions) => {
           const { username, password } = values;
-          setTimeout(() => {
-            // alert(
-            //   JSON.stringify(
-            //     {
-            //       username,
-            //       password,
-            //     },
-            //     null,
-            //     2
-            //   )
-            // );
-            actions.setSubmitting(false);
-            // double check the endpoint, make sure the fetch request is built proper
-            fetch('/login', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
+          // setTimeout(() => {
+          alert(
+            JSON.stringify(
+              {
                 username,
                 password,
-              }),
-            }).then((res) => res.json());
-          }, 1000);
+              },
+              null,
+              2
+            )
+          );
+          actions.setSubmitting(false);
+          // double check the endpoint, make sure the fetch request is built proper
+          // fetch('/login', {
+          //   method: 'POST',
+          //   headers: { 'Content-Type': 'application/json' },
+          //   body: JSON.stringify({
+          //     username,
+          //     password,
+          //   }),
+          // }).then((res) => res.json());
+          // }, 1000);
         }}
       >
         {(props) => (

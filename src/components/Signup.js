@@ -20,7 +20,14 @@ export default function Signup() {
   return (
     <Box>
       <Formik
-        initialValues={{}}
+        initialValues={{
+          email: '',
+          username: '',
+          firstName: '',
+          lastName: '',
+          password: '',
+          confirmPass: '',
+        }}
         validate={(values) => {
           const errors = {};
           const {
@@ -92,7 +99,7 @@ export default function Signup() {
             );
             actions.setSubmitting(false);
             // double check the endpoint, make sure the fetch request is built proper
-            fetch('./signup', {
+            fetch('/signup', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
