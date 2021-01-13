@@ -5,6 +5,7 @@ const dashController = {};
 dashController.getResumes = async (req, res, next) => {
   const { id } = req.params;
   const resumeQuery = `SELECT * FROM resume_table WHERE user_id = $1`;
+
   try {
     const data = await db.query(resumeQuery, [id]);
     res.locals.resume = data.rows;
@@ -20,6 +21,7 @@ dashController.getResumes = async (req, res, next) => {
 dashController.getApplications = async (req, res, next) => {
   const { id } = req.params;
   const applicationQuery = `SELECT * FROM application_table WHERE user_id = $1`;
+
   try {
     const data = await db.query(applicationQuery, [id]);
     res.locals.application = data.rows;
