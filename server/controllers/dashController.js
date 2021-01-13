@@ -20,11 +20,12 @@ dashController.getResumes = async (req, res, next) => {
 
 dashController.getApplications = async (req, res, next) => {
   const { id } = req.params;
-  const applicationQuery = `SELECT * FROM application_table WHERE user_id = $1`;
+  const applicationQuery = `SELECT app.*, res.res_name FROM application_table AS app LEFT OUTER JOIN resume_table AS res ON app.resume_id = res.id WHERE app.user_id = $1`;
 
   try {
     const data = await db.query(applicationQuery, [id]);
     res.locals.application = data.rows;
+    console.log(res.locals.application)
     return next();
   } catch (err) {
     next({
