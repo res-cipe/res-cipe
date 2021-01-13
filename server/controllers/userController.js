@@ -1,8 +1,14 @@
 const db = require('../models/userModel');
+const expressValidator = require('express-validator');
+const passport = require('passport');
+
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const userController = {};
 
-userController.newUser = async (req, res, next) => {
+userController.newUser = (req, res, next) => {
+  console.log('inside userController')
   const { username, password, email, firstName, lastName } = req.body;
   req.checkBody('username', 'Username field cannot be empty.').notEmpty();
   req
@@ -55,21 +61,44 @@ userController.newUser = async (req, res, next) => {
       message: { err: 'Form validation error' },
     });
   } else {
-    const queryStr =
-      'INSERT INTO user_table (username, password, email, first_name, last_name) VALUES ($1, $2, $3, $4, $5)';
-    const queryParams = [username, password, email, firstName, lastName];
-    try {
-      await db.query(queryStr, queryParams);
-      return next();
-    } catch (error) {
-      console.log('error from our db', error);
-      return next({
-        log: `Database error`,
-        status: 502,
-        message: { err: `${error.stack}` },
-      });
-    }
+    bcrypt.hash(password, saltRounds, async (err, hash) => {
+      // Store hash in your password DB.
+      console.log('inside bcrypt func');
+      const queryStr =
+        'INSERT INTO user_table (username, password, email, first_name, last_name) VALUES ($1, $2, $3, $4, $5) RETURNING id';
+      const queryParams = [username, hash, email, firstName, lastName];
+      try {
+        await db.query(queryStr, queryParams, (error, results, fields) => {
+          if (error) throw error;
+          console.log(results.rows[0]);
+          const { id } = results.rows[0];
+          req.login(id, (err) => {
+            //passport login
+            res.locals.id = id;
+            return next();
+            // res.redirect('/');
+          });
+        });
+        // return next();
+      } catch (error) {
+        console.log('error from our db', error);
+        return next({
+          log: `Database error`,
+          status: 502,
+          message: { err: `${error.stack}` },
+        });
+      }
+    });
   }
 };
+passport.serializeUser(function (id, done) {
+  done(null, id);
+});
+
+passport.deserializeUser(function (id, done) {
+  done(null, id);
+});
+
+userController.login = (req, res, next) => {};
 
 module.exports = userController;
