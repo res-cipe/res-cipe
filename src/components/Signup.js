@@ -76,13 +76,16 @@ export default function Signup({ isOpen, onClose }) {
             } else if (password.length < 8 || password.length > 100) {
               errors.password =
                 'Password must be between 8-100 characters long';
-              // } else if (
-              //   !password.match(
-              //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$/
-              //   )
-              // ) {
-              //   errors.password =
-              //     'Must include one lowercase character, one uppercase character, a number, and a special character';
+            } else if (
+              // !password.match(
+              // /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$/
+              // )
+              !password.match(
+                /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.* )(?=.*[^a-zA-Z0-9]).{8,}$/
+              )
+            ) {
+              errors.password =
+                'Must include one lowercase character, one uppercase character, a number, and a special character';
             }
 
             if (!passwordMatch) errors.passwordMatch = 'Required';
