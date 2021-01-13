@@ -25,7 +25,6 @@ dashController.getApplications = async (req, res, next) => {
   try {
     const data = await db.query(applicationQuery, [id]);
     res.locals.application = data.rows;
-    console.log(res.locals.application);
     return next();
   } catch (err) {
     next({
