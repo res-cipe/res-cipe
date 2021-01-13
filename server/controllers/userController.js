@@ -49,8 +49,11 @@ userController.newUser = async (req, res, next) => {
   const errors = req.validationErrors();
 
   if (errors) {
-    console.log('errors from validation:', errors);
-    res.locals.validationErr = errors;
+    return next({
+      log: `ERROR: useController.js: Form validation errors: ${errors}`,
+      status: 400,
+      message: { err: 'Form validation error' },
+    });
   } else {
     const queryStr =
       'INSERT INTO user_table (username, password, email, first_name, last_name) VALUES ($1, $2, $3, $4, $5)';
