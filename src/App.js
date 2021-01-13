@@ -3,7 +3,7 @@ import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
     <div>
