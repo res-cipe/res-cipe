@@ -9,7 +9,7 @@ import {
   FormLabel,
   Select,
 } from '@chakra-ui/react';
-import { StarIcon } from '@chakra-ui/icons';
+import { StarIcon, DeleteIcon } from '@chakra-ui/icons';
 
 export default function ApplicationCard(props) {
   const [rating, setRating] = React.useState(props.rating);
@@ -27,10 +27,26 @@ export default function ApplicationCard(props) {
       body: JSON.stringify(update),
     })
       .then((response) => {
-        if (update.rating) setRating(update.rating);
-        else if (update.status) setStatus(update.status);
+        if (response.ok) {
+          if (update.rating) setRating(update.rating);
+          else if (update.status) setStatus(update.status);
+        }
       })
       .catch((error) => console.log(error));
+  }
+
+  function deleteApplication() {
+    fetch(`/dashboard/${props.userId}/application`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: props.id }),
+    }).then((response) => {
+      if (response.ok) {
+        props.fetchAllApplications();
+      }
+    });
   }
 
   return (
@@ -44,8 +60,15 @@ export default function ApplicationCard(props) {
           as='h4'
           lineHeight='tight'
           isTruncated
+          d='flex'
         >
           {props.company}
+          <IconButton
+            icon={<DeleteIcon />}
+            background='none'
+            key={`delete${props.id}`}
+            onClick={() => deleteApplication()}
+          />
         </Box>
         <Box d='flex' alignItems='baseline'>
           <Badge borderRadius='full' px='2' colorScheme='teal'>
@@ -55,7 +78,7 @@ export default function ApplicationCard(props) {
 
         <Box>
           <Link href={props.link} isExternal>
-            OG Post
+            Original Listing
           </Link>
         </Box>
 

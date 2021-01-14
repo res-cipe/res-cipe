@@ -25,10 +25,7 @@ export default function AddApplication({
   const [currentResume, setCurrentResume] = React.useState({});
 
   function getResumeId(selected) {
-    console.log('get resume Id: ', selected);
-
     const resumeObj = resumes.filter((r) => r.res_name === selected);
-    console.log('resumeObj: ', resumeObj);
     setCurrentResume(resumeObj[0]);
   }
 
@@ -61,7 +58,6 @@ export default function AddApplication({
             }}
             onSubmit={(values, actions) => {
               const { companyName, jobLink, techstack, resume } = values;
-              console.log(currentResume);
               fetch(`/dashboard/${userId}/application`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

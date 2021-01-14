@@ -13,9 +13,13 @@ router.post('/:id/application', dashController.postApplication, (req, res) => {
   res.status(200).send();
 });
 
-router.delete('/:id/delete', dashController.deleteApplication, (req, res) => {
-  res.status(200).send();
-});
+router.delete(
+  '/:id/application',
+  dashController.deleteApplication,
+  (req, res) => {
+    res.status(200).send();
+  }
+);
 
 router.put('/:id/status', dashController.updateStatus, (req, res) => {
   res.status(200).send();

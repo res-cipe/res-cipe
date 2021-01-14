@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import Signup from './Signup';
 
-export default function Login({ setIsLoggedIn }) {
+export default function Login({ setIsLoggedIn, setUserId }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPass, setShow] = useState(false);
   const clickPass = () => setShow(!showPass);
@@ -39,17 +39,6 @@ export default function Login({ setIsLoggedIn }) {
         onSubmit={(values, actions) => {
           const { username, password } = values;
           setTimeout(() => {
-            alert(
-              JSON.stringify(
-                {
-                  username,
-                  password,
-                },
-                null,
-                2
-              )
-            );
-
             // double check the endpoint, make sure the fetch request is built proper
             fetch('/login', {
               method: 'POST',
@@ -59,11 +48,11 @@ export default function Login({ setIsLoggedIn }) {
                 password,
               }),
             })
-              .then((res) => {
-                if (res.ok) {
-                  actions.setSubmitting(false);
-                  onClose();
-                }
+              // .then((res) => res.json())
+              .then((data) => {
+                setIsLoggedIn(true);
+                console.log(data);
+                actions.setSubmitting(false);
               })
               .catch((err) => console.log(err));
           }, 1000);
@@ -80,7 +69,7 @@ export default function Login({ setIsLoggedIn }) {
                     {...field}
                     id='username'
                     placeholder='Username'
-                    required='true'
+                    required
                   />
                   <FormErrorMessage>{form.errors.username}</FormErrorMessage>
                 </FormControl>
@@ -96,7 +85,7 @@ export default function Login({ setIsLoggedIn }) {
                     <Input
                       {...field}
                       id='password'
-                      required='true'
+                      required
                       type={showPass ? 'text' : 'password'}
                       placeholder='Password'
                     />

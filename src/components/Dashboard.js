@@ -85,6 +85,7 @@ export default function Dashboard({ userId }) {
           rating={rating}
           resumeLabel={res_name}
           status={status}
+          fetchAllApplications={fetchAllApplications}
         />
       );
     });
@@ -102,7 +103,12 @@ export default function Dashboard({ userId }) {
         fetchAllApplications={fetchAllApplications}
       />
       <Button onClick={onOpen}>Add Resume</Button>
-      <AddResume isOpen={isOpen} onClose={onClose} />
+      <AddResume
+        userId={userId}
+        isOpen={isOpen}
+        onClose={onClose}
+        fetchAllResumes={fetchAllResumes}
+      />
     </div>
   );
 }
