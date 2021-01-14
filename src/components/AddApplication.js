@@ -94,6 +94,7 @@ export default function AddApplication({
                         {...field}
                         id='companyName'
                         placeholder='Company Name'
+                        key='company-input'
                       />
                       <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                     </FormControl>
@@ -109,6 +110,7 @@ export default function AddApplication({
                         {...field}
                         id='jobLink'
                         placeholder='Link to job posting'
+                        key='job-link'
                       />
                       <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                     </FormControl>
@@ -124,6 +126,7 @@ export default function AddApplication({
                         placeholder='Choose a resumé...'
                         id='resume'
                         onChange={(e) => getResumeId(e.target.value)}
+                        key='resume-select'
                       >
                         {resumeOptions}
                       </Select>
@@ -137,7 +140,11 @@ export default function AddApplication({
                     <FormControl
                       isInvalid={form.errors.name && form.touched.name}
                     >
-                      <Textarea placeholder='Tech Stack' id='techstack' />
+                      <Textarea
+                        placeholder='Tech Stack'
+                        id='techstack'
+                        key='tech-stack'
+                      />
                       <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                     </FormControl>
                   )}
@@ -145,7 +152,7 @@ export default function AddApplication({
 
                 <Button
                   mt={4}
-                  colorScheme='teal'
+                  colorScheme='purple'
                   isLoading={props.isSubmitting}
                   type='submit'
                 >

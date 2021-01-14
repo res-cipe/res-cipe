@@ -61,6 +61,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// serve static assets
+app.use(express.static(path.resolve(__dirname + '../assets')));
+
 // router for user login
 app.use('/login', loginRouter);
 
