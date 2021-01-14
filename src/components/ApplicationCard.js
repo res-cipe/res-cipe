@@ -64,8 +64,6 @@ export default function ApplicationCard(props) {
       borderRadius='lg'
       overflow='hidden'
     >
-      {/* <Image src={props.imageUrl} alt={props.imageAlt} /> */}
-
       <Box p='6' padding='1rem' flexDirection='row' minWidth='300px'>
         <Flex
           mt='1'
