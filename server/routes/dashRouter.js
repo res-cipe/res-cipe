@@ -39,7 +39,7 @@ router.post(
 );
 
 router.delete(
-  '/:id/delete',
+  '/:id/application',
   authController.verifyUser,
   dashController.deleteApplication,
   (req, res) => {
