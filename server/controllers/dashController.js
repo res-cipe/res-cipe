@@ -20,7 +20,7 @@ dashController.getResumes = async (req, res, next) => {
 
 dashController.getApplications = async (req, res, next) => {
   const { id } = req.params;
-  const applicationQuery = `SELECT * FROM application_table WHERE user_id = $1`;
+  const applicationQuery = `SELECT app.*, res.res_name FROM application_table AS app LEFT OUTER JOIN resume_table AS res ON app.resume_id = res.id WHERE app.user_id = $1`;
 
   try {
     const data = await db.query(applicationQuery, [id]);
@@ -98,6 +98,38 @@ dashController.deleteApplication = async (req, res, next) => {
     next({
       log: `dashController.deleteApplication: ERROR: ${err}`,
       message: { err: 'Error occurred in deleteApplication controller' },
+    });
+  }
+};
+
+dashController.updateStatus = async (req, res, next) => {
+  const { status, id } = req.body;
+  const updateQuery = `UPDATE application_table SET status = $1 WHERE id = $2`;
+  const queryParams = [status, id];
+
+  try {
+    await db.query(updateQuery, queryParams);
+    return next();
+  } catch (err) {
+    next({
+      log: `dashController.updateStatus: ERROR: ${err}`,
+      message: { err: 'Error occurred in updateStatus controller' },
+    });
+  }
+};
+
+dashController.updateRating = async (req, res, next) => {
+  const { rating, id } = req.body;
+  const updateRating = `UPDATE application_table SET rating = $1 WHERE id = $2`;
+  const queryParams = [rating, id];
+
+  try {
+    await db.query(updateRating, queryParams);
+    return next();
+  } catch (err) {
+    next({
+      log: `dashController.updateRating: ERROR: ${err}`,
+      message: { err: 'Error occurred in updateRating controller' },
     });
   }
 };

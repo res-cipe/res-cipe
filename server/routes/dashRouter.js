@@ -22,4 +22,16 @@ router.delete('/:id/delete', authController.verifyUser, dashController.deleteApp
   res.status(200).send();
 });
 
+router.put('/:id/status', dashController.updateStatus, (req, res) => {
+  res.status(200).send();
+})
+
+router.put('/:id/rating', dashController.updateRating, (req, res) => {
+  res.status(200).send()
+})
+
+router.get('/:id', dashController.getApplications, (req, res) => {
+  res.status(200).json(res.locals.application);
+});
+
 module.exports = router;
