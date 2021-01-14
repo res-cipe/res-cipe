@@ -55,10 +55,10 @@ export default function ApplicationCard(props) {
   }
 
   return (
-    <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
+    <Box bg="gray.50" boxShadow="base" maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
       {/* <Image src={props.imageUrl} alt={props.imageAlt} /> */}
 
-      <Box p='6' padding='1rem' flexDirection='row'>
+      <Box p='6' padding='1rem' flexDirection='row' minWidth="300px">
         <Flex
           mt='1'
           fontWeight='semibold'
