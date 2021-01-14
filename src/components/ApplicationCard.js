@@ -12,25 +12,25 @@ import {
 import { StarIcon } from '@chakra-ui/icons';
 
 export default function ApplicationCard(props) {
-  function updateApplication(update) {
-    // let updateString = '';
-    // if (update.rating) updateString = `/dashboard/${props.userId}/rating`;
-    // else if (update.status) updateString = `/dashboard/${props.userId}/status`;
-    // fetch(updateString, {
-    //   method: 'PUT',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(update),
-    // })
-    //   .then((response) => {
-    // props.fetchAllApplications();
-    props.setFlag((prev) => {
-      console.log(prev);
-      return !prev;
-    });
-    // })
-    // .catch((error) => console.log(error));
+  const [rating, setRating] = React.useState(props.rating);
+  const [status, setStatus] = React.useState(props.status);
+
+  function updateApplication(update, value) {
+    let updateString = '';
+    if (update.rating) updateString = `/dashboard/${props.userId}/rating`;
+    else if (update.status) updateString = `/dashboard/${props.userId}/status`;
+    fetch(updateString, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(update),
+    })
+      .then((response) => {
+        if (update.rating) setRating(update.rating);
+        else if (update.status) setStatus(update.status);
+      })
+      .catch((error) => console.log(error));
   }
 
   return (
@@ -61,13 +61,14 @@ export default function ApplicationCard(props) {
 
         <FormControl id='status'>
           <Select
-            placeholder={props.status}
             size='sm'
             onChange={(e) => {
-              console.log(e.target.value);
-              // updateApplication({ status: e.target.value, id: props.id });
+              updateApplication({ status: e.target.value, id: props.id });
             }}
           >
+            <option selected disabled>
+              {status}
+            </option>
             <option>Wishlist</option>
             <option>Applied</option>
             <option>Interview Scheduled</option>
@@ -85,13 +86,14 @@ export default function ApplicationCard(props) {
             .map((_, i) => (
               <IconButton
                 key={`star${i}`}
-                color={i < props.rating ? 'teal.500' : 'gray.300'}
+                color={i < rating ? 'teal.500' : 'gray.300'}
                 background='none'
                 size='sm'
                 icon={<StarIcon />}
                 onClick={() => {
                   // props.updateRating(i + 1)
-                  updateApplication({ rating: props.rating, id: props.id });
+                  // setRating(i + 1);
+                  updateApplication({ rating: i + 1, id: props.id });
                 }}
               />
             ))}

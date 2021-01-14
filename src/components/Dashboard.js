@@ -36,14 +36,11 @@ export default function Dashboard({ userId }) {
     },
   ];
 
-  // const [rating, setRating] = React.useState(props.rating);
-
   const [applications, setApplications] = React.useState([]);
-  const [flag, setFlag] = React.useState(true);
 
   React.useEffect(() => {
     fetchAllApplications();
-  }, [flag]);
+  }, []);
 
   function fetchAllApplications() {
     fetch(`/dashboard/${userId}`)
@@ -56,8 +53,8 @@ export default function Dashboard({ userId }) {
 
   const applicationCards = [];
 
-  if (props) {
-    props.forEach((app, index) => {
+  if (applications) {
+    applications.forEach((app, index) => {
       const {
         company_name,
         job_post_link,
@@ -77,8 +74,6 @@ export default function Dashboard({ userId }) {
           rating={rating}
           resumeLabel={res_name}
           status={status}
-          // fetchAllApplications={fetchAllApplications}
-          setFlag={setFlag}
         />
       );
     });
