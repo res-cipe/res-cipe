@@ -66,7 +66,6 @@ export default function Dashboard({ userId }) {
         id,
       } = app;
       applicationCards.push(
-        // <GridItem padding='15px'>
         <WrapItem>
           <ApplicationCard
             key={id}
@@ -80,7 +79,6 @@ export default function Dashboard({ userId }) {
             fetchAllApplications={fetchAllApplications}
           />
         </WrapItem>
-        // </GridItem>
       );
     });
   }
@@ -99,8 +97,7 @@ export default function Dashboard({ userId }) {
           />
         </Heading>
       </Center>
-      {/* <Grid h='auto' templateColumns='repeat(5, 1fr)' gap={4} justify='center'>
-        <GridItem rowSpan='auto' bg='gray.100'> */}
+
       <Center>
         <Stack direction='row' padding='15px'>
           <Metrics
@@ -121,13 +118,7 @@ export default function Dashboard({ userId }) {
           />
         </Stack>
       </Center>
-      {/* </GridItem> */}
-      {/* <GridItem>
-          <Grid templateColumns='repeat(3, 1fr)' autoRows='auto' spacing={8}>
-            {applicationCards}
-          </Grid>
-        </GridItem> */}
-      {/* </Grid> */}
+
       <Wrap justify='center' spacing='50px'>
         {applicationCards}
       </Wrap>
