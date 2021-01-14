@@ -8,6 +8,13 @@ import {
   ModalOverlay,
   ModalHeader,
   useDisclosure,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
 } from '@chakra-ui/react';
 
 export default function Metrics({ applications, fetchAllApplications }) {
@@ -39,9 +46,10 @@ export default function Metrics({ applications, fetchAllApplications }) {
     const { success, total } = resumeData[resume];
     const percent = percentEval(success, total);
     resMetrics.push(
-      <Code key={resume}>
-        {resume} --- Success Rate: {percent} %
-      </Code>
+      <Tr key={resume}>
+        <Td>{resume}</Td>
+        <Td isNumeric>{percent} %</Td>
+      </Tr>
     );
   });
 
@@ -53,7 +61,18 @@ export default function Metrics({ applications, fetchAllApplications }) {
         <ModalContent>
           <ModalHeader>Metrics</ModalHeader>
           <ModalCloseButton />
-          {resMetrics}
+          <Table variant='striped' colorScheme='teal'>
+            <TableCaption>
+              **Asked to interview vs submitted applications
+            </TableCaption>
+            <Thead>
+              <Tr>
+                <Th>Resume Used</Th>
+                <Th isNumeric>Success Rate</Th>
+              </Tr>
+            </Thead>
+            <Tbody>{resMetrics}</Tbody>
+          </Table>
         </ModalContent>
       </Modal>
     </>
