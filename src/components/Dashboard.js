@@ -5,37 +5,6 @@ import AddResume from './AddResume';
 import ApplicationCard from './ApplicationCard';
 
 export default function Dashboard({ userId }) {
-  const props = [
-    {
-      imageUrl: 'https://bit.ly/2Z4KKcF',
-      imageAlt: 'Rear view of modern home with pool',
-      company_name: 'Fucking Google',
-      job_post_link:
-        'https://www.linkedin.com/jobs/view/2208417001/?alternateChannel=search&refId=QayKwfbK20TiNXWx9cc8EA%3D%3D&trackingId=Ox84l426JPW8q3kqUloalg%3D%3D',
-      reviewCount: 34,
-      rating: 3,
-      res_name: 'Purple Header',
-      status: 'Interested',
-      id: 1001,
-    },
-    {
-      company_name: 'Facebook',
-      job_post_link: 'facebook.com',
-      rating: 5,
-      res_name: 'More Pedestrian',
-      status: 'Offer',
-      id: 1002,
-    },
-    {
-      company_name: 'linkedIn',
-      job_post_link: 'linkedin.com',
-      rating: 1,
-      res_name: 'More Pedestrian',
-      status: 'Take Home',
-      id: 1003,
-    },
-  ];
-
   const [applications, setApplications] = React.useState([]);
   const [resumes, setResumes] = React.useState([]);
 
@@ -46,7 +15,12 @@ export default function Dashboard({ userId }) {
 
   function fetchAllApplications() {
     fetch(`/dashboard/${userId}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error(`${response.status} ${response.statusText}`);
+      })
       .then((data) => {
         setApplications(data);
       })
@@ -55,7 +29,12 @@ export default function Dashboard({ userId }) {
 
   function fetchAllResumes() {
     fetch(`/dashboard/${userId}/allresumes`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error(`${response.status} ${response.statusText}`);
+      })
       .then((data) => {
         setResumes(data);
       })
