@@ -3,6 +3,7 @@ import { Button, useDisclosure } from '@chakra-ui/react';
 import AddApplication from './AddApplication';
 import AddResume from './AddResume';
 import ApplicationCard from './ApplicationCard';
+import Metrics from './Metrics';
 
 export default function Dashboard({ userId }) {
   const [applications, setApplications] = React.useState([]);
@@ -88,6 +89,7 @@ export default function Dashboard({ userId }) {
         onClose={onClose}
         fetchAllResumes={fetchAllResumes}
       />
+      <Metrics applications={applications} />
     </div>
   );
 }
