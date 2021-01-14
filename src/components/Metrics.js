@@ -19,9 +19,9 @@ export default function Metrics({ applications, fetchAllApplications }) {
     return Math.round((success / total) * 10000) / 100;
   }
 
-  applications.forEach((el) => {
-    const { res_name, status } = el;
-    console.log(el);
+  applications.forEach((app) => {
+    const { res_name, status } = app;
+
     if (!resumeData[res_name]) {
       resumeData[res_name] = { success: 0, failure: 0, total: 0 };
     }
@@ -33,14 +33,10 @@ export default function Metrics({ applications, fetchAllApplications }) {
     resumeData[res_name].total++;
   });
 
-  console.log(resumeData);
-  console.log(percentEval(0, 3));
-
   const resMetrics = [];
   const workingResumes = Object.keys(resumeData);
   workingResumes.forEach((resume) => {
     const { success, total } = resumeData[resume];
-    console.log(success, total);
     const percent = percentEval(success, total);
     resMetrics.push(
       <Code key={resume}>
