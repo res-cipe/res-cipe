@@ -21,6 +21,10 @@ export default function Metrics({ applications, fetchAllApplications }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // onOpen(fetchAllApplications());
 
+  React.useEffect(() => {
+    // fetchAllApplications();
+  });
+
   const resumeData = {};
 
   function percentEval(success, total) {
@@ -33,12 +37,13 @@ export default function Metrics({ applications, fetchAllApplications }) {
     if (!resumeData[res_name]) {
       resumeData[res_name] = { success: 0, failure: 0, total: 0 };
     }
-    if (status === 'Applied' || status === 'Rejected') {
+    if (status === 'Applied' || status === 'Rejected')
       resumeData[res_name].failure++;
-    } else {
-      resumeData[res_name].success++;
-    }
-    resumeData[res_name].total++;
+    else if (status !== 'Wishlist') resumeData[res_name].success++;
+
+    if (status !== 'Wishlist') resumeData[res_name].total++;
+
+    console.log(resumeData[res_name]);
   });
 
   const resMetrics = [];

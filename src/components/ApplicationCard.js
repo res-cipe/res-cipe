@@ -30,6 +30,7 @@ export default function ApplicationCard(props) {
         if (response.ok) {
           if (update.rating) setRating(update.rating);
           else if (update.status) setStatus(update.status);
+          props.fetchAllApplications();
         }
       })
       .catch((error) => console.log(error));
