@@ -44,10 +44,6 @@ export default function Dashboard({ userId }) {
     fetchAllResumes();
   }, []);
 
-  React.useEffect(() => {
-    console.log(resumes);
-  }, [resumes]);
-
   function fetchAllApplications() {
     fetch(`/dashboard/${userId}`)
       .then((response) => response.json())
