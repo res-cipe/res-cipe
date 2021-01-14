@@ -13,20 +13,24 @@ import { StarIcon } from '@chakra-ui/icons';
 
 export default function ApplicationCard(props) {
   function updateApplication(update) {
-    let updateString = '';
-    if (update.rating) updateString = `/dashboard/${props.userId}/rating`;
-    else if (update.status) updateString = `/dashboard/${props.userId}/status`;
-    fetch(updateString, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(update),
-    })
-      .then((response) => {
-        props.fetchAllApplications();
-      })
-      .catch((error) => console.log(error));
+    // let updateString = '';
+    // if (update.rating) updateString = `/dashboard/${props.userId}/rating`;
+    // else if (update.status) updateString = `/dashboard/${props.userId}/status`;
+    // fetch(updateString, {
+    //   method: 'PUT',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(update),
+    // })
+    //   .then((response) => {
+    // props.fetchAllApplications();
+    props.setFlag((prev) => {
+      console.log(prev);
+      return !prev;
+    });
+    // })
+    // .catch((error) => console.log(error));
   }
 
   return (

@@ -38,49 +38,56 @@ export default function Login({ setIsLoggedIn }) {
         }}
         onSubmit={(values, actions) => {
           const { username, password } = values;
-          // setTimeout(() => {
-          alert(
-            JSON.stringify(
-              {
+          setTimeout(() => {
+            alert(
+              JSON.stringify(
+                {
+                  username,
+                  password,
+                },
+                null,
+                2
+              )
+            );
+
+            // double check the endpoint, make sure the fetch request is built proper
+            fetch('/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
                 username,
                 password,
-              },
-              null,
-              2
-            )
-          );
-          actions.setSubmitting(false);
-          // double check the endpoint, make sure the fetch request is built proper
-          // fetch('/login', {
-          //   method: 'POST',
-          //   headers: { 'Content-Type': 'application/json' },
-          //   body: JSON.stringify({
-          //     username,
-          //     password,
-          //   }),
-          // }).then((res) => res.json());
-          // }, 1000);
+              }),
+            })
+              .then((res) => {
+                if (res.ok) {
+                  actions.setSubmitting(false);
+                  onClose();
+                }
+              })
+              .catch((err) => console.log(err));
+          }, 1000);
         }}
       >
         {(props) => (
           <Form>
-            <Field name="username">
+            <Field name='username'>
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.username && form.touched.username}
                 >
                   <Input
                     {...field}
-                    id="username"
-                    placeholder="Username"
-                    required="true"
+                    id='username'
+                    placeholder='Username'
+                    required='true'
                   />
                   <FormErrorMessage>{form.errors.username}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
 
-            <Field name="password">
+            <Field name='password'>
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.password && form.touched.password}
@@ -88,13 +95,13 @@ export default function Login({ setIsLoggedIn }) {
                   <InputGroup>
                     <Input
                       {...field}
-                      id="password"
-                      required="true"
+                      id='password'
+                      required='true'
                       type={showPass ? 'text' : 'password'}
-                      placeholder="Password"
+                      placeholder='Password'
                     />
-                    <InputRightElement width="4.5rem">
-                      <Button h="1.75rem" size="sm" onClick={clickPass}>
+                    <InputRightElement width='4.5rem'>
+                      <Button h='1.75rem' size='sm' onClick={clickPass}>
                         {showPass ? 'Hide' : 'Show'}
                       </Button>
                     </InputRightElement>
@@ -106,9 +113,9 @@ export default function Login({ setIsLoggedIn }) {
 
             <Button
               mt={4}
-              colorScheme="teal"
+              colorScheme='teal'
               isLoading={props.isSubmitting}
-              type="submit"
+              type='submit'
             >
               Login
             </Button>

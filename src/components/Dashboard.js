@@ -9,40 +9,41 @@ export default function Dashboard({ userId }) {
     {
       imageUrl: 'https://bit.ly/2Z4KKcF',
       imageAlt: 'Rear view of modern home with pool',
-      company: 'Fucking Google',
-      link:
+      company_name: 'Fucking Google',
+      job_post_link:
         'https://www.linkedin.com/jobs/view/2208417001/?alternateChannel=search&refId=QayKwfbK20TiNXWx9cc8EA%3D%3D&trackingId=Ox84l426JPW8q3kqUloalg%3D%3D',
       reviewCount: 34,
       rating: 3,
-      resumeLabel: 'Purple Header',
+      res_name: 'Purple Header',
       status: 'Interested',
       id: 1001,
     },
     {
-      company: 'Facebook',
-      link: 'facebook.com',
+      company_name: 'Facebook',
+      job_post_link: 'facebook.com',
       rating: 5,
-      resumeLabel: 'More Pedestrian',
+      res_name: 'More Pedestrian',
       status: 'Offer',
       id: 1002,
     },
     {
-      company: 'LinkedIn',
-      link: 'linkedin.com',
+      company_name: 'linkedIn',
+      job_post_link: 'linkedin.com',
       rating: 1,
-      resumeLabel: 'More Pedestrian',
+      res_name: 'More Pedestrian',
       status: 'Take Home',
       id: 1003,
     },
   ];
 
-  const [rating, setRating] = React.useState(props.rating);
+  // const [rating, setRating] = React.useState(props.rating);
 
   const [applications, setApplications] = React.useState([]);
+  const [flag, setFlag] = React.useState(true);
 
   React.useEffect(() => {
     fetchAllApplications();
-  }, []);
+  }, [flag]);
 
   function fetchAllApplications() {
     fetch(`/dashboard/${userId}`)
@@ -55,12 +56,13 @@ export default function Dashboard({ userId }) {
 
   const applicationCards = [];
 
-  if (applications) {
-    applications.forEach((app, index) => {
+  if (props) {
+    props.forEach((app, index) => {
       const {
         company_name,
         job_post_link,
         resume_id,
+        res_name,
         status,
         rating,
         id,
@@ -73,9 +75,10 @@ export default function Dashboard({ userId }) {
           company={company_name}
           link={job_post_link}
           rating={rating}
-          resumeLabel={resume_id}
+          resumeLabel={res_name}
           status={status}
-          fetchAllApplications={fetchAllApplications}
+          // fetchAllApplications={fetchAllApplications}
+          setFlag={setFlag}
         />
       );
     });
