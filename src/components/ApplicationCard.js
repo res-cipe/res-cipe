@@ -75,7 +75,7 @@ export default function ApplicationCard(props) {
           />
         </Flex>
         <Box d='flex' alignItems='baseline'>
-          <Badge borderRadius='full' px='2' colorScheme='teal'>
+          <Badge borderRadius='full' px='2' colorScheme='purple'>
             {props.resumeLabel}
           </Badge>
         </Box>
@@ -112,7 +112,7 @@ export default function ApplicationCard(props) {
             .map((_, i) => (
               <IconButton
                 key={`star${i}`}
-                color={i < rating ? 'teal.500' : 'gray.300'}
+                color={i < rating ? 'purple.500' : 'gray.300'}
                 background='none'
                 size='sm'
                 icon={<StarIcon />}
