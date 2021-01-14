@@ -1,4 +1,5 @@
 import React from 'react';
+import { Formik, Form, Field } from 'formik';
 import {
   Button,
   ModalContent,
@@ -14,8 +15,12 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 
-export default function AddApplication() {
+export default function AddApplication({ userId, resumes }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  function submitApp(e) {
+    console.log(e.target);
+  }
   return (
     <>
       <Button onClick={onOpen}>Add Application</Button>
@@ -25,19 +30,45 @@ export default function AddApplication() {
         <ModalContent>
           <ModalHeader>Add Application</ModalHeader>
           <ModalCloseButton />
-          <FormControl isRequired>
-            <Input placeholder='Company Name' id='company-name' />
-            <Input placeholder='Job Post Link' id='job-link' />
-            <Select placeholder='Choose a resumé...'>
-              <option value='option 1'>Option 1</option>
-              <option value='option 2'>Option 2</option>
-            </Select>
-            <Textarea placeholder='Tech Stack' />
-          </FormControl>
-
-          <ModalFooter>
-            <Button colorScheme='blue'>Submit</Button>
-          </ModalFooter>
+          <Formik
+            initialValues={{
+              companyName: '',
+              jobLink: '',
+              techstack: '',
+              resume: '',
+            }}
+            onSubmit={(values, actions) => {
+              const { companyName, jobLink, techstack, resume } = values;
+              fetch(`/dashboard/${userId}/resume`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  companyName,
+                  jobPostLink: jobLink,
+                  techStack: techstack,
+                  resumeId: resume,
+                }),
+              });
+            }}
+          >
+            <FormControl isRequired>
+              <Input placeholder='Company Name' id='companyName' />
+              <Input placeholder='Job Post Link' id='jobLink' />
+              <Select placeholder='Choose a resumé...' id='resume'>
+                {/* {resumes.map((resume) => (
+                  <option id={resume.id}>{resume.res_name}</option>
+                ))} */}
+              </Select>
+              <Textarea placeholder='Tech Stack' id='techstack' />
+              <Button
+                colorScheme='blue'
+                type='submit'
+                onClick={(e) => submitApp(e)}
+              >
+                Submit
+              </Button>
+            </FormControl>
+          </Formik>
         </ModalContent>
       </Modal>
     </>

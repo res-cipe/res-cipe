@@ -37,16 +37,31 @@ export default function Dashboard({ userId }) {
   ];
 
   const [applications, setApplications] = React.useState([]);
+  const [resumes, setResumes] = React.useState([]);
 
   React.useEffect(() => {
     fetchAllApplications();
+    fetchAllResumes();
   }, []);
+
+  React.useEffect(() => {
+    console.log(resumes);
+  }, [resumes]);
 
   function fetchAllApplications() {
     fetch(`/dashboard/${userId}`)
       .then((response) => response.json())
       .then((data) => {
         setApplications(data);
+      })
+      .catch((error) => console.log(error));
+  }
+
+  function fetchAllResumes() {
+    fetch(`/dashboard/${userId}/allresumes`)
+      .then((response) => response.json())
+      .then((data) => {
+        setResumes(data);
       })
       .catch((error) => console.log(error));
   }
@@ -85,7 +100,7 @@ export default function Dashboard({ userId }) {
     <div>
       {applicationCards}
 
-      <AddApplication />
+      <AddApplication userId={userId} resumes={resumes} />
       <Button onClick={onOpen}>Add Resume</Button>
       <AddResume isOpen={isOpen} onClose={onClose} />
     </div>

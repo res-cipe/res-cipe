@@ -62,13 +62,12 @@ export default function ApplicationCard(props) {
         <FormControl id='status'>
           <Select
             size='sm'
+            value={status}
             onChange={(e) => {
               updateApplication({ status: e.target.value, id: props.id });
             }}
           >
-            <option selected disabled>
-              {status}
-            </option>
+            <option disabled>{status}</option>
             <option>Wishlist</option>
             <option>Applied</option>
             <option>Interview Scheduled</option>

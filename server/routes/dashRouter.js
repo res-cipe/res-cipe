@@ -5,7 +5,6 @@ router.get('/:id/allresumes', dashController.getResumes, (req, res) => {
   res.status(200).json(res.locals.resume);
 });
 
-
 router.post('/:id/resume', dashController.postResume, (req, res) => {
   res.status(200).send();
 });
@@ -20,11 +19,11 @@ router.delete('/:id/delete', dashController.deleteApplication, (req, res) => {
 
 router.put('/:id/status', dashController.updateStatus, (req, res) => {
   res.status(200).send();
-})
+});
 
 router.put('/:id/rating', dashController.updateRating, (req, res) => {
-  res.status(200).send()
-})
+  res.status(200).send();
+});
 
 router.get('/:id', dashController.getApplications, (req, res) => {
   res.status(200).json(res.locals.application);
