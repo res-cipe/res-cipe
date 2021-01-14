@@ -3,7 +3,7 @@ import Dashboard from './components/Dashboard';
 import LoginContainer from './components/test/LoginContainer';
 
 export default function App() {
-  const [state, setState] = useState({ userId: 19, isLoggedIn: true }); // defaults should be changed back to null, and false respectively
+  const [state, setState] = useState({ userId: null, isLoggedIn: false });
 
   return (
     <div>
