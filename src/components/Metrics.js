@@ -17,13 +17,8 @@ import {
   TableCaption,
 } from '@chakra-ui/react';
 
-export default function Metrics({ applications, fetchAllApplications }) {
+export default function Metrics({ applications }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // onOpen(fetchAllApplications());
-
-  React.useEffect(() => {
-    // fetchAllApplications();
-  });
 
   const resumeData = {};
 
@@ -69,7 +64,7 @@ export default function Metrics({ applications, fetchAllApplications }) {
           <ModalCloseButton />
           <Table variant='striped' colorScheme='teal'>
             <TableCaption>
-              **Asked to interview vs submitted applications
+              **Interview requests+ vs submitted applications
             </TableCaption>
             <Thead>
               <Tr>

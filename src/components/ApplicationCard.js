@@ -30,6 +30,7 @@ export default function ApplicationCard(props) {
         if (response.ok) {
           if (update.rating) setRating(update.rating);
           else if (update.status) setStatus(update.status);
+          // Added this back in to make metrics work properly, not terribly efficient, but a workaround for now
           props.fetchAllApplications();
         }
       })
@@ -114,8 +115,6 @@ export default function ApplicationCard(props) {
                 size='sm'
                 icon={<StarIcon />}
                 onClick={() => {
-                  // props.updateRating(i + 1)
-                  // setRating(i + 1);
                   updateApplication({ rating: i + 1, id: props.id });
                 }}
               />
