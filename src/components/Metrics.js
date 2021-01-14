@@ -37,8 +37,6 @@ export default function Metrics({ applications }) {
     else if (status !== 'Wishlist') resumeData[res_name].success++;
 
     if (status !== 'Wishlist') resumeData[res_name].total++;
-
-    console.log(resumeData[res_name]);
   });
 
   const resMetrics = [];
