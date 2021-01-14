@@ -8,6 +8,8 @@ import {
   FormControl,
   FormLabel,
   Select,
+  Flex,
+  Spacer,
 } from '@chakra-ui/react';
 import { StarIcon, DeleteIcon } from '@chakra-ui/icons';
 
@@ -56,7 +58,7 @@ export default function ApplicationCard(props) {
       {/* <Image src={props.imageUrl} alt={props.imageAlt} /> */}
 
       <Box p='6'>
-        <Box
+        <Flex
           mt='1'
           fontWeight='semibold'
           as='h4'
@@ -71,7 +73,7 @@ export default function ApplicationCard(props) {
             key={`delete${props.id}`}
             onClick={() => deleteApplication()}
           />
-        </Box>
+        </Flex>
         <Box d='flex' alignItems='baseline'>
           <Badge borderRadius='full' px='2' colorScheme='teal'>
             {props.resumeLabel}
