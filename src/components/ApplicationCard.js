@@ -10,6 +10,7 @@ import {
   Select,
   Flex,
   Spacer,
+  Heading,
 } from '@chakra-ui/react';
 import { StarIcon, DeleteIcon } from '@chakra-ui/icons';
 
@@ -57,7 +58,7 @@ export default function ApplicationCard(props) {
     <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
       {/* <Image src={props.imageUrl} alt={props.imageAlt} /> */}
 
-      <Box p='6'>
+      <Box p='6' padding='1rem' flexDirection='row'>
         <Flex
           mt='1'
           fontWeight='semibold'
@@ -66,7 +67,8 @@ export default function ApplicationCard(props) {
           isTruncated
           d='flex'
         >
-          {props.company}
+          <Heading padding='5px'>{props.company}</Heading>
+          <Spacer />
           <IconButton
             icon={<DeleteIcon />}
             background='none'
@@ -74,17 +76,20 @@ export default function ApplicationCard(props) {
             onClick={() => deleteApplication()}
           />
         </Flex>
-        <Box d='flex' alignItems='baseline'>
-          <Badge borderRadius='full' px='2' colorScheme='purple'>
-            {props.resumeLabel}
-          </Badge>
-        </Box>
 
-        <Box>
-          <Link href={props.link} isExternal>
-            Original Listing
-          </Link>
-        </Box>
+        <Flex>
+          <Box padding='5px' flexDirection='column'>
+            <Link href={props.link} isExternal>
+              Original Listing
+            </Link>
+          </Box>
+          <Spacer />
+          <Box d='flex' alignItems='baseline'>
+            <Badge borderRadius='full' px='2' colorScheme='purple'>
+              {props.resumeLabel}
+            </Badge>
+          </Box>
+        </Flex>
 
         <FormControl id='status'>
           <Select
