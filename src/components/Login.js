@@ -38,24 +38,24 @@ export default function Login({ setIsLoggedIn, setUserId }) {
         }}
         onSubmit={(values, actions) => {
           const { username, password } = values;
-          setTimeout(() => {
-            // double check the endpoint, make sure the fetch request is built proper
-            fetch('/login', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                username,
-                password,
-              }),
+          // setTimeout(() => {
+          // double check the endpoint, make sure the fetch request is built proper
+          fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              username,
+              password,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              setIsLoggedIn(true);
+              console.log('data: ', data.body);
+              actions.setSubmitting(false);
             })
-              // .then((res) => res.json())
-              .then((data) => {
-                setIsLoggedIn(true);
-                console.log(data);
-                actions.setSubmitting(false);
-              })
-              .catch((err) => console.log(err));
-          }, 1000);
+            .catch((err) => console.log(err));
+          // }, 1000);
         }}
       >
         {(props) => (
