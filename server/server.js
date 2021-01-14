@@ -69,11 +69,16 @@ app.use('/signup', userRouter);
 
 app.use('/dashboard', dashRouter);
 
-// Serving index.html
-// app.use(express.static(path.join(__dirname, '../index.html')));
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../index.html'));
-});
+if (process.env.NODE_ENV === 'production') {
+  app.get('/build/bundle.js', (req, res) => {
+    console.log(path.join(__dirname, '../build/bundle.js'));
+    res.status(200).sendFile(path.join(__dirname, '../build/bundle.js'));
+  });
+
+  app.get('/', (req, res) => {
+    res.status(200).sendFile(path.join(__dirname, '../index.html'));
+  });
+}
 
 // verifying username and password exist in database and authenticating and creating login session
 passport.use(
