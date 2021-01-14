@@ -18,8 +18,9 @@ import {
 } from '@chakra-ui/react';
 
 export default function Metrics({ applications, fetchAllApplications }) {
-  fetchAllApplications();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // onOpen(fetchAllApplications());
+
   const resumeData = {};
 
   function percentEval(success, total) {
@@ -48,7 +49,7 @@ export default function Metrics({ applications, fetchAllApplications }) {
     resMetrics.push(
       <Tr key={resume}>
         <Td>{resume}</Td>
-        <Td isNumeric>{percent} %</Td>
+        <Td isNumeric>{percent}%</Td>
       </Tr>
     );
   });
