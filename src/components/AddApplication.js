@@ -16,7 +16,11 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 
-export default function AddApplication({ userId, resumes }) {
+export default function AddApplication({
+  userId,
+  resumes,
+  fetchAllApplications,
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [currentResume, setCurrentResume] = React.useState({});
 
@@ -75,6 +79,7 @@ export default function AddApplication({ userId, resumes }) {
                   if (response.ok) {
                     actions.setSubmitting(false);
                     onClose();
+                    fetchAllApplications();
                   }
                 })
                 .catch((error) => {

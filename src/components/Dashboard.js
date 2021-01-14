@@ -96,7 +96,11 @@ export default function Dashboard({ userId }) {
     <div>
       {applicationCards}
 
-      <AddApplication userId={userId} resumes={resumes} />
+      <AddApplication
+        userId={userId}
+        resumes={resumes}
+        fetchAllApplications={fetchAllApplications}
+      />
       <Button onClick={onOpen}>Add Resume</Button>
       <AddResume isOpen={isOpen} onClose={onClose} />
     </div>
