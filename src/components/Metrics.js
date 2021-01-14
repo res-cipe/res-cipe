@@ -10,7 +10,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-export default function Metrics({ applications }) {
+export default function Metrics({ applications, fetchAllApplications }) {
+  fetchAllApplications();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const resumeData = {};
 

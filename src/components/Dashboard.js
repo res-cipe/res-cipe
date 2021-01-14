@@ -89,7 +89,10 @@ export default function Dashboard({ userId }) {
         onClose={onClose}
         fetchAllResumes={fetchAllResumes}
       />
-      <Metrics applications={applications} />
+      <Metrics
+        applications={applications}
+        fetchAllApplications={fetchAllApplications}
+      />
     </div>
   );
 }
