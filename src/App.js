@@ -3,15 +3,14 @@ import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(1);
+  const [state, setState] = useState({ userId: null, isLoggedIn: false });
 
   return (
     <div>
-      {isLoggedIn ? (
-        <Dashboard userId={userId} />
+      {state.isLoggedIn ? (
+        <Dashboard userId={state.userId} />
       ) : (
-        <Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} />
+        <Login setState={setState} />
       )}
     </div>
   );
