@@ -3,7 +3,6 @@ import { Formik, Form, Field } from 'formik';
 import {
   Box,
   FormControl,
-  FormLabel,
   Input,
   InputGroup,
   InputRightElement,
@@ -13,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import Signup from './Signup';
 
-export default function Login({ setIsLoggedIn, setUserId }) {
+export default function Login({ setState }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPass, setShow] = useState(false);
   const clickPass = () => setShow(!showPass);
@@ -38,8 +37,6 @@ export default function Login({ setIsLoggedIn, setUserId }) {
         }}
         onSubmit={(values, actions) => {
           const { username, password } = values;
-          // setTimeout(() => {
-          // double check the endpoint, make sure the fetch request is built proper
           fetch('/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -48,27 +45,32 @@ export default function Login({ setIsLoggedIn, setUserId }) {
               password,
             }),
           })
-            .then((res) => res.json())
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              }
+              throw new Error(`${response.status} ${response.statusText}`);
+            })
             .then((data) => {
-              setIsLoggedIn(true);
-              console.log('data: ', data.body);
-              actions.setSubmitting(false);
+              if (data.userId) {
+                actions.setSubmitting(false);
+                setState({ userId: data.userId, isLoggedIn: true });
+              }
             })
             .catch((err) => console.log(err));
-          // }, 1000);
         }}
       >
         {(props) => (
           <Form>
-            <Field name='username'>
+            <Field name="username">
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.username && form.touched.username}
                 >
                   <Input
                     {...field}
-                    id='username'
-                    placeholder='Username'
+                    id="username"
+                    placeholder="Username"
                     required
                   />
                   <FormErrorMessage>{form.errors.username}</FormErrorMessage>
@@ -76,7 +78,7 @@ export default function Login({ setIsLoggedIn, setUserId }) {
               )}
             </Field>
 
-            <Field name='password'>
+            <Field name="password">
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.password && form.touched.password}
@@ -84,13 +86,13 @@ export default function Login({ setIsLoggedIn, setUserId }) {
                   <InputGroup>
                     <Input
                       {...field}
-                      id='password'
+                      id="password"
                       required
                       type={showPass ? 'text' : 'password'}
-                      placeholder='Password'
+                      placeholder="Password"
                     />
-                    <InputRightElement width='4.5rem'>
-                      <Button h='1.75rem' size='sm' onClick={clickPass}>
+                    <InputRightElement width="4.5rem">
+                      <Button h="1.75rem" size="sm" onClick={clickPass}>
                         {showPass ? 'Hide' : 'Show'}
                       </Button>
                     </InputRightElement>
@@ -102,9 +104,9 @@ export default function Login({ setIsLoggedIn, setUserId }) {
 
             <Button
               mt={4}
-              colorScheme='teal'
+              colorScheme="teal"
               isLoading={props.isSubmitting}
-              type='submit'
+              type="submit"
             >
               Login
             </Button>
