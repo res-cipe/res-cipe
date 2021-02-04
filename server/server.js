@@ -33,6 +33,9 @@ app.use(expressValidator());
 // cookieParser middleware
 app.use(cookieParser());
 
+// serve static assets
+app.get('/assets/*', express.static(path.resolve(__dirname + '../assets')));
+
 // creating new session cookies in db
 
 const pgPool = new pg.Pool({
@@ -60,9 +63,6 @@ app.use(
 // passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
-// serve static assets
-app.use(express.static(path.resolve(__dirname + '../assets')));
 
 // router for user login
 app.use('/login', loginRouter);
