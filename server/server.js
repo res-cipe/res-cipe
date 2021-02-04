@@ -37,10 +37,9 @@ app.use(cookieParser());
 app.get('/assets/*', express.static(path.resolve(__dirname + '../assets')));
 
 // creating new session cookies in db
-
+// enter your connection string for your db
 const pgPool = new pg.Pool({
-  connectionString:
-    'postgres://yfopfigc:NdRchGgXUa0D2bkRE4haivaL7eXpn86w@ziggy.db.elephantsql.com:5432/yfopfigc',
+  connectionString: '',
 });
 
 // session middleware and storing session in db
@@ -63,6 +62,9 @@ app.use(
 // passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+// serve static assets
+app.use(express.static(path.resolve(__dirname, '../assets')));
 
 // router for user login
 app.use('/login', loginRouter);
