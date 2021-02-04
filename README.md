@@ -19,11 +19,11 @@ Contributions are what make the open source community such an amazing place to b
 5. Open a Pull Request
 
 ## Contributors
-Sabrina Goldfarb
-Jason Liggayu
-Lourent Flores
-Jennifer Courtner
-Kyle Jurassic
+Sabrina Goldfarb  
+Jason Liggayu  
+Lourent Flores   
+Jennifer Courtner   
+Kyle Jurassic 
 
 ## License 
 Distributed under the MIT License. See `LICENSE` for more information.
