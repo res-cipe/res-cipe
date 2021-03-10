@@ -8,7 +8,7 @@ export default function LoginContainer({ setState }) {
 
   return (
     <Center flexDirection="column">
-      <Image src="/rescipelogo.png" />
+      <Image src="../../assets/rescipelogo.png" />
       <Box
         margin="1rem"
         padding="1rem"
