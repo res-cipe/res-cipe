@@ -88,18 +88,18 @@ export default function Dashboard({ userId }) {
   return (
     <div>
       <Center>
-        <Heading mt='2'>
+        <Heading mt="2">
           <Image
-            id='logo'
-            src='/rescipelogo.png'
-            alt='Rescipe Logo'
+            id="logo"
+            src="../../assets/rescipelogo.png"
+            alt="Rescipe Logo"
             htmlWidth={1000}
           />
         </Heading>
       </Center>
 
       <Center>
-        <Stack direction='row' padding='15px'>
+        <Stack direction="row" padding="15px">
           <Metrics
             applications={applications}
             fetchAllApplications={fetchAllApplications}
@@ -119,7 +119,7 @@ export default function Dashboard({ userId }) {
         </Stack>
       </Center>
 
-      <Wrap justify='center' spacing='50px'>
+      <Wrap justify="center" spacing="50px">
         {applicationCards}
       </Wrap>
     </div>

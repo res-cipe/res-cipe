@@ -39,7 +39,8 @@ app.get('/assets/*', express.static(path.resolve(__dirname + '../assets')));
 // creating new session cookies in db
 // enter your connection string for your db
 const pgPool = new pg.Pool({
-  connectionString: '',
+  connectionString:
+    'postgres://yfopfigc:NdRchGgXUa0D2bkRE4haivaL7eXpn86w@ziggy.db.elephantsql.com:5432/yfopfigc',
 });
 
 // session middleware and storing session in db
